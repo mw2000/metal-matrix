@@ -3,6 +3,20 @@ name = "kernel-benches"
 version = "0.1.0"
 edition = "2021"
 license = "MIT"
+authors = ["Your Name <your.email@example.com>"]
+description = "Metal GPU kernel benchmarks"
 
 [dependencies]
 metal = "0.31.0"
+anyhow = "1.0"
+thiserror = "1.0"
+log = "0.4"
+env_logger = "0.10"
+bytemuck = { version = "1.14", features = ["derive"] }
+
+[dev-dependencies]
+criterion = "0.5"
+
+[[bench]]
+name = "kernel_benchmarks"
+harness = false
