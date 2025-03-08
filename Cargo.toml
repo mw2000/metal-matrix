@@ -9,7 +9,7 @@ repository = "https://github.com/yourusername/metal-matrix"
 documentation = "https://docs.rs/metal-matrix"
 readme = "README.md"
 keywords = ["metal", "gpu", "linear-algebra", "matrix", "macos"]
-categories = ["mathematics", "hardware-support", "gpu"]
+categories = ["mathematics", "hardware-support"]
 exclude = [".github/", "benches/", "example/"]
 
 [dependencies]
