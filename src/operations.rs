@@ -3,8 +3,6 @@ use metal::*;
 use crate::kernels;
 use crate::MetalContext;
 use crate::matrix::Matrix;
-use std::ops::{Add, Sub, Mul};
-
 
 /// Performs matrix multiplication on the GPU: C = A * B
 pub fn matrix_multiply(context: &MetalContext, a: &Matrix, b: &Matrix) -> Result<Matrix> {
