@@ -1,26 +1,26 @@
 /*!
  * # Metal Matrix
- * 
+ *
  * A high-performance linear algebra library with Metal GPU acceleration.
- * 
+ *
  * This library provides GPU-accelerated matrix operations using Apple's Metal framework.
  * It's designed for efficient computation of common linear algebra operations like
  * matrix multiplication, addition, subtraction, transposition, and scalar multiplication.
- * 
+ *
  * ## Features
- * 
+ *
  * - GPU-accelerated matrix operations
  * - Clean, ergonomic API
  * - Support for vectors as 1D matrices
  * - CPU fallback implementations
  * - Comprehensive error handling
- * 
+ *
  * ## Example
- * 
+ *
  * ```rust
  * use metal_matrix::{MetalContext, Matrix, matrix_multiply};
  * use anyhow::Result;
- * 
+ *
  * fn main() -> Result<()> {
  *     // Initialize Metal context
  *     let context = MetalContext::new()?;
@@ -52,6 +52,6 @@ pub mod operations;
 /// Matrix data structure and methods
 pub mod matrix;
 
+pub use matrix::Matrix;
 pub use metal_context::MetalContext;
 pub use operations::*;
-pub use matrix::Matrix; 

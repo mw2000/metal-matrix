@@ -4,7 +4,13 @@ version = "0.1.0"
 edition = "2021"
 license = "MIT"
 authors = ["Mihir Wadekar <mw20000>"]
-description = "Metal GPU kernel benchmarks"
+description = "High-performance linear algebra library with Metal GPU acceleration"
+repository = "https://github.com/yourusername/metal-matrix"
+documentation = "https://docs.rs/metal-matrix"
+readme = "README.md"
+keywords = ["metal", "gpu", "linear-algebra", "matrix", "macos"]
+categories = ["mathematics", "hardware-support", "gpu"]
+exclude = [".github/", "benches/", "example/"]
 
 [dependencies]
 metal = "0.31.0"
@@ -24,3 +30,8 @@ harness = false
 [[bin]]
 name = "example"
 path = "example/main.rs"
+
+[package.metadata.docs.rs]
+default-target = "x86_64-apple-darwin"
+targets = ["x86_64-apple-darwin", "aarch64-apple-darwin"]
+rustdoc-args = ["--cfg", "docsrs"]

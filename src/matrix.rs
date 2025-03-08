@@ -1,8 +1,8 @@
 /*!
  * # Matrix
- * 
+ *
  * This module provides the core `Matrix` data structure for linear algebra operations.
- * 
+ *
  * The `Matrix` struct represents a 2D matrix with floating-point elements.
  * It supports both regular matrices and vectors (as 1D matrices).
  */
@@ -43,10 +43,10 @@ use anyhow::Result;
 pub struct Matrix {
     /// Number of rows in the matrix
     pub rows: usize,
-    
+
     /// Number of columns in the matrix
     pub cols: usize,
-    
+
     /// Matrix data in row-major order
     pub data: Vec<f32>,
 }
@@ -69,7 +69,7 @@ impl Matrix {
             data: vec![0.0; rows * cols],
         }
     }
-    
+
     /// Create a new matrix with given dimensions and data.
     ///
     /// # Arguments
@@ -89,14 +89,10 @@ impl Matrix {
         if data.len() != rows * cols {
             anyhow::bail!("Data length does not match matrix dimensions");
         }
-        
-        Ok(Self {
-            rows,
-            cols,
-            data,
-        })
+
+        Ok(Self { rows, cols, data })
     }
-    
+
     /// Create a column vector (1D matrix) with given data.
     ///
     /// # Arguments
@@ -113,7 +109,7 @@ impl Matrix {
             data,
         }
     }
-    
+
     /// Create an identity matrix of size n×n.
     ///
     /// # Arguments
@@ -130,7 +126,7 @@ impl Matrix {
         }
         matrix
     }
-    
+
     /// Get element at position (row, col).
     ///
     /// # Arguments
@@ -148,7 +144,7 @@ impl Matrix {
     pub fn get(&self, row: usize, col: usize) -> f32 {
         self.data[row * self.cols + col]
     }
-    
+
     /// Set element at position (row, col).
     ///
     /// # Arguments
@@ -163,7 +159,7 @@ impl Matrix {
     pub fn set(&mut self, row: usize, col: usize, value: f32) {
         self.data[row * self.cols + col] = value;
     }
-    
+
     /// Check if this matrix is a vector (1D matrix).
     ///
     /// # Returns
@@ -172,7 +168,7 @@ impl Matrix {
     pub fn is_vector(&self) -> bool {
         self.cols == 1 || self.rows == 1
     }
-    
+
     /// Get the size of the matrix if it's a vector.
     ///
     /// # Returns
@@ -187,7 +183,7 @@ impl Matrix {
             0 // Not a vector
         }
     }
-    
+
     /// Get vector element at index (for 1D matrices).
     ///
     /// # Arguments
@@ -205,14 +201,14 @@ impl Matrix {
         if !self.is_vector() {
             anyhow::bail!("Not a vector");
         }
-        
+
         if self.cols == 1 {
             Ok(self.get(index, 0))
         } else {
             Ok(self.get(0, index))
         }
     }
-    
+
     /// Extract a row as a new Matrix.
     ///
     /// # Arguments
@@ -237,7 +233,7 @@ impl Matrix {
             data,
         }
     }
-    
+
     /// Extract a column as a new Matrix.
     ///
     /// # Arguments
