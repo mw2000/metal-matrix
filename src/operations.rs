@@ -97,7 +97,7 @@ pub fn matrix_multiply(context: &MetalContext, a: &Matrix, b: &Matrix) -> Result
         // Calculate optimal threadgroup size
         let max_threads = pipeline.max_total_threads_per_threadgroup();
         let width = (n as u64).min(16);
-        let height = (max_threads as u64 / width).min(m as u64).max(1);
+        let height = (max_threads / width).min(m as u64).max(1);
 
         let threadgroup_size = MTLSize::new(width, height, 1);
         encoder.dispatch_threads(grid_size, threadgroup_size);
@@ -111,7 +111,7 @@ pub fn matrix_multiply(context: &MetalContext, a: &Matrix, b: &Matrix) -> Result
         std::ptr::copy_nonoverlapping(result_ptr, result_data.as_mut_ptr(), m * n);
     }
 
-    Ok(Matrix::with_data(m, n, result_data)?)
+    Matrix::with_data(m, n, result_data)
 }
 
 /// Performs matrix addition on the GPU: C = A + B
@@ -170,11 +170,8 @@ pub fn matrix_add(context: &MetalContext, a: &Matrix, b: &Matrix) -> Result<Matr
         encoder.set_buffer(2, Some(&buffer_result), 0);
 
         let grid_size = MTLSize::new(size as u64, 1, 1);
-        let threadgroup_size = MTLSize::new(
-            pipeline.max_total_threads_per_threadgroup().min(256) as u64,
-            1,
-            1,
-        );
+        let threadgroup_size =
+            MTLSize::new(pipeline.max_total_threads_per_threadgroup().min(256), 1, 1);
         encoder.dispatch_threads(grid_size, threadgroup_size);
     })?;
 
@@ -186,7 +183,7 @@ pub fn matrix_add(context: &MetalContext, a: &Matrix, b: &Matrix) -> Result<Matr
         std::ptr::copy_nonoverlapping(result_ptr, result_data.as_mut_ptr(), size);
     }
 
-    Ok(Matrix::with_data(rows, cols, result_data)?)
+    Matrix::with_data(rows, cols, result_data)
 }
 
 /// Performs matrix subtraction on the GPU: C = A - B
@@ -245,11 +242,8 @@ pub fn matrix_subtract(context: &MetalContext, a: &Matrix, b: &Matrix) -> Result
         encoder.set_buffer(2, Some(&buffer_result), 0);
 
         let grid_size = MTLSize::new(size as u64, 1, 1);
-        let threadgroup_size = MTLSize::new(
-            pipeline.max_total_threads_per_threadgroup().min(256) as u64,
-            1,
-            1,
-        );
+        let threadgroup_size =
+            MTLSize::new(pipeline.max_total_threads_per_threadgroup().min(256), 1, 1);
         encoder.dispatch_threads(grid_size, threadgroup_size);
     })?;
 
@@ -261,7 +255,7 @@ pub fn matrix_subtract(context: &MetalContext, a: &Matrix, b: &Matrix) -> Result
         std::ptr::copy_nonoverlapping(result_ptr, result_data.as_mut_ptr(), size);
     }
 
-    Ok(Matrix::with_data(rows, cols, result_data)?)
+    Matrix::with_data(rows, cols, result_data)
 }
 
 /// Performs matrix transpose on the GPU: B = A^T
@@ -323,7 +317,7 @@ pub fn matrix_transpose(context: &MetalContext, a: &Matrix) -> Result<Matrix> {
         // Calculate optimal threadgroup size
         let max_threads = pipeline.max_total_threads_per_threadgroup();
         let width = (cols as u64).min(16);
-        let height = (max_threads as u64 / width).min(rows as u64).max(1);
+        let height = (max_threads / width).min(rows as u64).max(1);
 
         let threadgroup_size = MTLSize::new(width, height, 1);
         encoder.dispatch_threads(grid_size, threadgroup_size);
@@ -337,7 +331,7 @@ pub fn matrix_transpose(context: &MetalContext, a: &Matrix) -> Result<Matrix> {
         std::ptr::copy_nonoverlapping(result_ptr, result_data.as_mut_ptr(), rows * cols);
     }
 
-    Ok(Matrix::with_data(cols, rows, result_data)?)
+    Matrix::with_data(cols, rows, result_data)
 }
 
 /// Performs scalar multiplication on the GPU: B = scalar * A
@@ -388,11 +382,8 @@ pub fn matrix_scalar_multiply(context: &MetalContext, scalar: f32, a: &Matrix) -
         encoder.set_buffer(2, Some(&buffer_result), 0);
 
         let grid_size = MTLSize::new(size as u64, 1, 1);
-        let threadgroup_size = MTLSize::new(
-            pipeline.max_total_threads_per_threadgroup().min(256) as u64,
-            1,
-            1,
-        );
+        let threadgroup_size =
+            MTLSize::new(pipeline.max_total_threads_per_threadgroup().min(256), 1, 1);
         encoder.dispatch_threads(grid_size, threadgroup_size);
     })?;
 
@@ -404,5 +395,5 @@ pub fn matrix_scalar_multiply(context: &MetalContext, scalar: f32, a: &Matrix) -
         std::ptr::copy_nonoverlapping(result_ptr, result_data.as_mut_ptr(), size);
     }
 
-    Ok(Matrix::with_data(rows, cols, result_data)?)
+    Matrix::with_data(rows, cols, result_data)
 }

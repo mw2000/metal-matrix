@@ -112,9 +112,9 @@ impl MetalContext {
     ///
     /// * `T` - Type of data to store in the buffer (must be `Copy`)
     pub fn new_buffer_with_data<T: Copy>(&self, data: &[T]) -> Buffer {
-        let size = (data.len() * std::mem::size_of::<T>()) as u64;
+        let size = std::mem::size_of_val(data) as u64;
         self.device.new_buffer_with_data(
-            unsafe { std::mem::transmute(data.as_ptr()) },
+            unsafe { std::mem::transmute::<*const T, *const std::ffi::c_void>(data.as_ptr()) },
             size,
             MTLResourceOptions::StorageModeShared,
         )
@@ -154,7 +154,7 @@ impl MetalContext {
     ///
     /// # Example
     ///
-    /// ```
+    /// ```no_run
     /// use metal_matrix::MetalContext;
     ///
     /// let context = MetalContext::new().unwrap();
@@ -172,7 +172,7 @@ impl MetalContext {
         let command_buffer = self.command_queue.new_command_buffer();
         let encoder = command_buffer.new_compute_command_encoder();
 
-        encoder_setup(&encoder);
+        encoder_setup(encoder);
 
         encoder.end_encoding();
         command_buffer.commit();
