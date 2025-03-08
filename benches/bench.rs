@@ -1,5 +1,5 @@
 use criterion::{black_box, criterion_group, criterion_main, Criterion, BenchmarkId};
-use kernel_benches::{matrix_add, matrix_multiply, matrix_scalar_multiply, matrix_subtract, matrix_transpose, Matrix, MetalContext};
+use metal_matrix::{matrix_add, matrix_multiply, matrix_scalar_multiply, matrix_subtract, matrix_transpose, Matrix, MetalContext};
 
 fn bench_matrix_multiply(c: &mut Criterion) {
     let context = MetalContext::new().unwrap();

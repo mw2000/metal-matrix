@@ -1,3 +1,17 @@
+//
+// Matrix Transpose Kernel
+//
+// This kernel performs matrix transposition.
+// Each thread processes one element of the matrix.
+//
+// Parameters:
+// - A: Input matrix (rows × cols)
+// - B: Output matrix (cols × rows)
+// - rows: Number of rows in the input matrix
+// - cols: Number of columns in the input matrix
+// - position: 2D thread position in the grid
+//
+
 #include <metal_stdlib>
 using namespace metal;
 

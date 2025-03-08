@@ -1,3 +1,19 @@
+//
+// Matrix Multiplication Kernel
+//
+// This kernel performs matrix multiplication: C = A * B
+// Each thread computes one element of the output matrix.
+//
+// Parameters:
+// - A: First input matrix (M × K)
+// - B: Second input matrix (K × N)
+// - C: Output matrix (M × N)
+// - M: Number of rows in A
+// - N: Number of columns in B
+// - K: Number of columns in A / rows in B
+// - position: 2D thread position in the grid
+//
+
 #include <metal_stdlib>
 using namespace metal;
 

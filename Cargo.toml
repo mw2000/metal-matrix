@@ -1,9 +1,9 @@
 [package]
-name = "kernel-benches"
+name = "metal-matrix"
 version = "0.1.0"
 edition = "2021"
 license = "MIT"
-authors = ["Your Name <your.email@example.com>"]
+authors = ["Mihir Wadekar <mw20000>"]
 description = "Metal GPU kernel benchmarks"
 
 [dependencies]
@@ -18,7 +18,7 @@ bytemuck = { version = "1.14", features = ["derive"] }
 criterion = "0.5"
 
 [[bench]]
-name = "kernel_benchmarks"
+name = "bench"
 harness = false
 
 [[bin]]

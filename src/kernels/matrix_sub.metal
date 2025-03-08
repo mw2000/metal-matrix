@@ -1,3 +1,16 @@
+//
+// Matrix Subtraction Kernel
+//
+// This kernel performs element-wise subtraction of two matrices.
+// Each thread processes one element of the matrices.
+//
+// Parameters:
+// - A: First input matrix
+// - B: Second input matrix
+// - C: Output matrix (result of A - B)
+// - index: Thread position in the grid (one thread per matrix element)
+//
+
 #include <metal_stdlib>
 using namespace metal;
 

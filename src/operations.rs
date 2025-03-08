@@ -1,3 +1,24 @@
+/*!
+ * # Matrix Operations
+ * 
+ * This module provides GPU-accelerated matrix operations using Metal.
+ * 
+ * All operations are implemented as functions that take a `MetalContext` and
+ * input matrices, and return a new matrix with the result of the operation.
+ * 
+ * ## Available Operations
+ * 
+ * - Matrix multiplication (`matrix_multiply`)
+ * - Matrix addition (`matrix_add`)
+ * - Matrix subtraction (`matrix_subtract`)
+ * - Matrix transpose (`matrix_transpose`)
+ * - Scalar multiplication (`matrix_scalar_multiply`)
+ * - Dot product (`dot_product`)
+ * 
+ * Each operation validates the input dimensions and returns appropriate errors
+ * if the inputs are incompatible.
+ */
+
 use anyhow::Result;
 use metal::*;
 use crate::kernels;
@@ -5,6 +26,34 @@ use crate::MetalContext;
 use crate::matrix::Matrix;
 
 /// Performs matrix multiplication on the GPU: C = A * B
+///
+/// Computes the matrix product of two matrices using the GPU.
+///
+/// # Arguments
+///
+/// * `context` - The Metal context for GPU computation
+/// * `a` - The first matrix (m × k)
+/// * `b` - The second matrix (k × n)
+///
+/// # Returns
+///
+/// A `Result` containing the product matrix (m × n) or an error.
+///
+/// # Errors
+///
+/// Returns an error if the matrices have incompatible dimensions (a.cols != b.rows).
+///
+/// # Example
+///
+/// ```
+/// use metal_matrix::{MetalContext, Matrix, matrix_multiply};
+///
+/// let context = MetalContext::new().unwrap();
+/// let a = Matrix::with_data(2, 3, vec![1.0, 2.0, 3.0, 4.0, 5.0, 6.0]).unwrap();
+/// let b = Matrix::with_data(3, 2, vec![7.0, 8.0, 9.0, 10.0, 11.0, 12.0]).unwrap();
+///
+/// let result = matrix_multiply(&context, &a, &b).unwrap();
+/// ```
 pub fn matrix_multiply(context: &MetalContext, a: &Matrix, b: &Matrix) -> Result<Matrix> {
     // Validate input
     if a.cols != b.rows {
@@ -68,6 +117,34 @@ pub fn matrix_multiply(context: &MetalContext, a: &Matrix, b: &Matrix) -> Result
 }
 
 /// Performs matrix addition on the GPU: C = A + B
+///
+/// Computes the element-wise sum of two matrices using the GPU.
+///
+/// # Arguments
+///
+/// * `context` - The Metal context for GPU computation
+/// * `a` - The first matrix (m × n)
+/// * `b` - The second matrix (m × n)
+///
+/// # Returns
+///
+/// A `Result` containing the sum matrix (m × n) or an error.
+///
+/// # Errors
+///
+/// Returns an error if the matrices have different dimensions.
+///
+/// # Example
+///
+/// ```
+/// use metal_matrix::{MetalContext, Matrix, matrix_add};
+///
+/// let context = MetalContext::new().unwrap();
+/// let a = Matrix::with_data(2, 2, vec![1.0, 2.0, 3.0, 4.0]).unwrap();
+/// let b = Matrix::with_data(2, 2, vec![5.0, 6.0, 7.0, 8.0]).unwrap();
+///
+/// let result = matrix_add(&context, &a, &b).unwrap();
+/// ```
 pub fn matrix_add(context: &MetalContext, a: &Matrix, b: &Matrix) -> Result<Matrix> {
     // Validate input
     if a.rows != b.rows || a.cols != b.cols {
@@ -117,6 +194,34 @@ pub fn matrix_add(context: &MetalContext, a: &Matrix, b: &Matrix) -> Result<Matr
 }
 
 /// Performs matrix subtraction on the GPU: C = A - B
+///
+/// Computes the element-wise difference of two matrices using the GPU.
+///
+/// # Arguments
+///
+/// * `context` - The Metal context for GPU computation
+/// * `a` - The first matrix (m × n)
+/// * `b` - The second matrix (m × n)
+///
+/// # Returns
+///
+/// A `Result` containing the difference matrix (m × n) or an error.
+///
+/// # Errors
+///
+/// Returns an error if the matrices have different dimensions.
+///
+/// # Example
+///
+/// ```
+/// use metal_matrix::{MetalContext, Matrix, matrix_subtract};
+///
+/// let context = MetalContext::new().unwrap();
+/// let a = Matrix::with_data(2, 2, vec![5.0, 6.0, 7.0, 8.0]).unwrap();
+/// let b = Matrix::with_data(2, 2, vec![1.0, 2.0, 3.0, 4.0]).unwrap();
+///
+/// let result = matrix_subtract(&context, &a, &b).unwrap();
+/// ```
 pub fn matrix_subtract(context: &MetalContext, a: &Matrix, b: &Matrix) -> Result<Matrix> {
     // Validate input
     if a.rows != b.rows || a.cols != b.cols {
@@ -166,6 +271,30 @@ pub fn matrix_subtract(context: &MetalContext, a: &Matrix, b: &Matrix) -> Result
 }
 
 /// Performs matrix transpose on the GPU: B = A^T
+///
+/// Computes the transpose of a matrix using the GPU.
+///
+/// # Arguments
+///
+/// * `context` - The Metal context for GPU computation
+/// * `a` - The input matrix (m × n)
+///
+/// # Returns
+///
+/// A `Result` containing the transposed matrix (n × m) or an error.
+///
+/// # Example
+///
+/// ```
+/// use metal_matrix::{MetalContext, Matrix, matrix_transpose};
+///
+/// let context = MetalContext::new().unwrap();
+/// let a = Matrix::with_data(2, 3, vec![1.0, 2.0, 3.0, 4.0, 5.0, 6.0]).unwrap();
+///
+/// let result = matrix_transpose(&context, &a).unwrap();
+/// assert_eq!(result.rows, 3);
+/// assert_eq!(result.cols, 2);
+/// ```
 pub fn matrix_transpose(context: &MetalContext, a: &Matrix) -> Result<Matrix> {
     let rows = a.rows;
     let cols = a.cols;
@@ -218,6 +347,29 @@ pub fn matrix_transpose(context: &MetalContext, a: &Matrix) -> Result<Matrix> {
 }
 
 /// Performs scalar multiplication on the GPU: B = scalar * A
+///
+/// Multiplies each element of a matrix by a scalar value using the GPU.
+///
+/// # Arguments
+///
+/// * `context` - The Metal context for GPU computation
+/// * `scalar` - The scalar value to multiply by
+/// * `a` - The input matrix (m × n)
+///
+/// # Returns
+///
+/// A `Result` containing the scaled matrix (m × n) or an error.
+///
+/// # Example
+///
+/// ```
+/// use metal_matrix::{MetalContext, Matrix, matrix_scalar_multiply};
+///
+/// let context = MetalContext::new().unwrap();
+/// let a = Matrix::with_data(2, 2, vec![1.0, 2.0, 3.0, 4.0]).unwrap();
+///
+/// let result = matrix_scalar_multiply(&context, 2.5, &a).unwrap();
+/// ```
 pub fn matrix_scalar_multiply(context: &MetalContext, scalar: f32, a: &Matrix) -> Result<Matrix> {
     let rows = a.rows;
     let cols = a.cols;

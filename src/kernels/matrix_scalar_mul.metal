@@ -1,3 +1,16 @@
+//
+// Matrix Scalar Multiplication Kernel
+//
+// This kernel performs scalar multiplication of a matrix.
+// Each thread processes one element of the matrix.
+//
+// Parameters:
+// - A: Input matrix
+// - scalar: Scalar value to multiply by
+// - B: Output matrix (result of scalar * A)
+// - index: Thread position in the grid (one thread per matrix element)
+//
+
 #include <metal_stdlib>
 using namespace metal;
 

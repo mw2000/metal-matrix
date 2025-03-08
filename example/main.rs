@@ -1,5 +1,5 @@
 use anyhow::Result;
-use kernel_benches::{
+use metal_matrix::{
     MetalContext, Matrix,
     matrix_multiply, matrix_add, matrix_subtract,
     matrix_transpose, matrix_scalar_multiply

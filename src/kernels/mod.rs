@@ -1,3 +1,15 @@
+/*!
+ * # Metal Kernels
+ * 
+ * This module contains paths and function names for all Metal kernel files used in the library.
+ * 
+ * The kernels are organized into two submodules:
+ * - `paths`: Contains the file paths to the Metal kernel files
+ * - `functions`: Contains the function names within those kernel files
+ * 
+ * This organization makes it easy to load and use the kernels throughout the library.
+ */
+
 /// Paths to Metal kernel files
 pub mod paths {
     /// Path to the matrix multiplication kernel

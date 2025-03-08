@@ -342,19 +342,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "kernel-benches"
-version = "0.1.0"
-dependencies = [
- "anyhow",
- "bytemuck",
- "criterion",
- "env_logger",
- "log",
- "metal",
- "thiserror",
-]
-
-[[package]]
 name = "libc"
 version = "0.2.170"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -394,6 +381,19 @@ dependencies = [
  "log",
  "objc",
  "paste",
+]
+
+[[package]]
+name = "metal-matrix"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "bytemuck",
+ "criterion",
+ "env_logger",
+ "log",
+ "metal",
+ "thiserror",
 ]
 
 [[package]]
