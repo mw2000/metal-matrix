@@ -1,8 +1,8 @@
 use anyhow::Result;
 use kernel_benches::{
-    MetalContext, Matrix, Vector,
-    vector_add, matrix_multiply, matrix_add, matrix_subtract,
-    matrix_transpose, matrix_scalar_multiply, vector_dot_product
+    MetalContext, Matrix,
+    matrix_multiply, matrix_add, matrix_subtract,
+    matrix_transpose, matrix_scalar_multiply
 };
 
 fn main() -> Result<()> {
@@ -12,42 +12,9 @@ fn main() -> Result<()> {
     // Setup Metal context
     let context = MetalContext::new()?;
     
-    // Test vector addition
-    test_vector_addition(&context)?;
-    
     // Test matrix operations
     test_matrix_operations(&context)?;
     
-    // Test vector dot product
-    test_vector_dot_product(&context)?;
-    
-    Ok(())
-}
-
-fn test_vector_addition(context: &MetalContext) -> Result<()> {
-    println!("\n=== Testing Vector Addition ===");
-    
-    // Create test data
-    let size = 1024;
-    let a: Vec<f32> = (0..size).map(|x| x as f32).collect();
-    let b: Vec<f32> = (0..size).map(|x| (x * 2) as f32).collect();
-    
-    // Perform vector addition
-    let result = vector_add(context, &a, &b)?;
-    
-    // Verify results
-    println!("Vector addition result[0] = {}", result[0]); // Should be 0.0
-    println!("Vector addition result[1] = {}", result[1]); // Should be 3.0
-    
-    // Verify a few more elements
-    for i in 0..5 {
-        let expected = a[i] + b[i];
-        let actual = result[i];
-        println!("result[{}] = {} (expected: {})", i, actual, expected);
-        assert!((actual - expected).abs() < 1e-6);
-    }
-    
-    println!("Vector addition test completed successfully!");
     Ok(())
 }
 
@@ -133,25 +100,6 @@ fn test_matrix_operations(context: &MetalContext) -> Result<()> {
     print_matrix(&scalar_result);
     
     println!("Matrix operations tests completed successfully!");
-    Ok(())
-}
-
-fn test_vector_dot_product(context: &MetalContext) -> Result<()> {
-    println!("\n=== Testing Vector Dot Product ===");
-    
-    // Create test vectors
-    let vec_a = Vector::with_data(vec![1.0, 2.0, 3.0, 4.0, 5.0]);
-    let vec_b = Vector::with_data(vec![5.0, 4.0, 3.0, 2.0, 1.0]);
-    
-    // Compute dot product
-    let dot_result = vector_dot_product(context, &vec_a, &vec_b)?;
-    
-    // Verify result
-    let expected = vec_a.dot_cpu(&vec_b)?;
-    println!("Dot product: {} (expected: {})", dot_result, expected);
-    assert!((dot_result - expected).abs() < 1e-6);
-    
-    println!("Vector dot product test completed successfully!");
     Ok(())
 }
 

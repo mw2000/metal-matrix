@@ -1,8 +1,5 @@
 /// Paths to Metal kernel files
 pub mod paths {
-    /// Path to the vector addition kernel
-    pub const VECTOR_ADD: &str = "src/kernels/vector_add.metal";
-    
     /// Path to the matrix multiplication kernel
     pub const MATRIX_MUL: &str = "src/kernels/matrix_mul.metal";
     
@@ -17,16 +14,10 @@ pub mod paths {
     
     /// Path to the matrix scalar multiplication kernel
     pub const MATRIX_SCALAR_MUL: &str = "src/kernels/matrix_scalar_mul.metal";
-    
-    /// Path to the vector dot product kernel
-    pub const VECTOR_DOT: &str = "src/kernels/vector_dot.metal";
 }
 
 /// Names of kernel functions
 pub mod functions {
-    /// Vector addition kernel function name
-    pub const VECTOR_ADD: &str = "add_arrays";
-    
     /// Matrix multiplication kernel function name
     pub const MATRIX_MUL: &str = "matrix_multiply";
     
@@ -41,7 +32,5 @@ pub mod functions {
     
     /// Matrix scalar multiplication kernel function name
     pub const MATRIX_SCALAR_MUL: &str = "matrix_scalar_multiply";
-    
-    /// Vector dot product kernel function name
-    pub const VECTOR_DOT: &str = "vector_dot_product";
-} 
+}
+ 
